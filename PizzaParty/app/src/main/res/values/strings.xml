@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pizza Party</string>
+    <string name="app_name">Kieran's Pizza Party</string>
     <string name="total_pizzas">Total pizzas: %d</string>
     <string name="number_of_people">Number of people?</string>
     <string name="how_hungry">How hungry?</string>
