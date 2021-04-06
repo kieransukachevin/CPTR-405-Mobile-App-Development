@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,11 +14,14 @@
     android:background="@drawable/pizza_background">
 
     <TextView
+        android:id="@+id/numPeopleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/number_of_people"
         android:textSize="@dimen/label_text_size"
-        android:labelFor="@id/attendEditText" />
+        android:labelFor="@id/attendEditText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/attendEditText"
@@ -26,21 +30,28 @@
         android:inputType="number"
         android:ems="5"
         android:importantForAutofill="no"
-        android:hint="@string/_10" />
+        android:hint="@string/_10"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/numPeopleText"/>
 
     <TextView
+        android:id="@+id/howHungryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/how_hungry"
         android:textSize="24sp"
-        android:labelFor="@id/hungryRadioGroup" />
+        android:labelFor="@id/hungryRadioGroup"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/attendEditText" />
 
     <RadioGroup
         android:id="@+id/hungryRadioGroup"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/howHungryText">
         <RadioButton
             android:id="@+id/lightRadioButton"
             android:text="@string/light"
@@ -65,7 +76,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hungryRadioGroup"/>
 
     <Button
         android:id="@+id/calcButton"
@@ -73,5 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:onClick="calculateClick" />
-</LinearLayout>
+        android:onClick="calculateClick"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/answerTextView"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
