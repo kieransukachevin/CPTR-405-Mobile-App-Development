@@ -88,5 +88,6 @@
         android:layout_marginTop="20dp"
         android:onClick="calculateClick"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/answerTextView"/>
+        app:layout_constraintTop_toBottomOf="@id/answerTextView"
+        style="@style/CalcButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
