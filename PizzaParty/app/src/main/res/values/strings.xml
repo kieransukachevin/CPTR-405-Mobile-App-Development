@@ -9,4 +9,9 @@
     <string name="ravenous">Ravenous</string>
     <string name="total_pizzas_2">Total pizzas: ?</string>
     <string name="calculate">Calculate</string>
+    <string-array name="options_array">
+        <item>LIGHT</item>
+        <item>MEDIUM</item>
+        <item>RAVENOUS</item>
+    </string-array>
 </resources>

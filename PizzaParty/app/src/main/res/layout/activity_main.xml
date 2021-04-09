@@ -31,8 +31,8 @@
         android:ems="5"
         android:importantForAutofill="no"
         android:hint="@string/_10"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/numPeopleText"/>
+        app:layout_constraintLeft_toRightOf="@id/numPeopleText"
+        app:layout_constraintBaseline_toBaselineOf="@id/numPeopleText"/>
 
     <TextView
         android:id="@+id/howHungryText"
@@ -41,34 +41,16 @@
         android:layout_marginTop="20dp"
         android:text="@string/how_hungry"
         android:textSize="24sp"
-        android:labelFor="@id/hungryRadioGroup"
+        android:labelFor="@id/hungrySpinner"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/attendEditText" />
 
-    <RadioGroup
-        android:id="@+id/hungryRadioGroup"
+    <Spinner
+        android:id="@+id/hungrySpinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/howHungryText">
-        <RadioButton
-            android:id="@+id/lightRadioButton"
-            android:text="@string/light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <RadioButton
-            android:id="@+id/mediumRadioButton"
-            android:text="@string/medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true" />
-        <RadioButton
-            android:id="@+id/ravenousRadioButton"
-            android:text="@string/ravenous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RadioGroup>
+        app:layout_constraintLeft_toRightOf="@id/howHungryText"
+        app:layout_constraintBaseline_toBaselineOf="@id/howHungryText" />
 
     <TextView
         android:id="@+id/answerTextView"
@@ -78,7 +60,7 @@
         android:layout_marginTop="20dp"
         android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/hungryRadioGroup"/>
+        app:layout_constraintTop_toBottomOf="@id/hungrySpinner" />
 
     <Button
         android:id="@+id/calcButton"
