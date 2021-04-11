@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Drawit</string>
     <string name="welcome_to_drawit">Welcome to Drawit!</string>
+    <string name="size">Size:</string>
+    <string-array name="options_array">
+        <item>Pen</item>
+        <item>Brush</item>
+        <item>Pencil</item>
+    </string-array>
+    <string-array name="color_array">
+        <item>Yellow</item>
+        <item>Red</item>
+        <item>Blue</item>
+    </string-array>
 </resources>
