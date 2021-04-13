@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView mNumPizzasTextView;
     private Spinner mHowHungrySpinner;
     private final static String TAG = "MainActivity";
+    private final String KEY_TOTAL_PIZZAS = "totalPizzas";
+    private int mTotalPizzas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
         mNumAttendEditText = findViewById(R.id.attendEditText);
         mNumPizzasTextView = findViewById(R.id.answerTextView);
         mHowHungrySpinner = findViewById(R.id.hungrySpinner);
+
+        // Restore state
+        if (savedInstanceState != null) {
+            mTotalPizzas = savedInstanceState.getInt(KEY_TOTAL_PIZZAS);
+        }
 
         mNumAttendEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -70,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate was called");
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_TOTAL_PIZZAS, mTotalPizzas);
+    }
+
     public void calculateClick(View view) {
 
         // Get how many are attending the party
@@ -81,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
         catch (NumberFormatException ex) {
             numAttend = 0;
         }
+
+//        mTotalPizzas = calc.getTotalPizzas();
+//        displayTotal();
 
         // Get hunger level selection
 //        int checkedId = mHowHungrySpinner.get();
