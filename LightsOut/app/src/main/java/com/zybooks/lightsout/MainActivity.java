@@ -5,11 +5,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String GAME_STATE = "gameState";
     private LightsOutGame mGame;
     private Button[][] mButtons;
     private int mOnColor;
@@ -37,12 +40,24 @@ public class MainActivity extends AppCompatActivity {
 
         mCheat = 0;
         mGame = new LightsOutGame();
-        startGame();
+        if (savedInstanceState == null) {
+            startGame();
+        } else {
+            String gameState = savedInstanceState.getString(GAME_STATE);
+            mGame.setState(gameState);
+            setButtonColors();
+        }
     }
 
     private void startGame() {
         mGame.newGame();
         setButtonColors();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(GAME_STATE, mGame.getState());
     }
 
     public void onLightButtonClick(View view) {
