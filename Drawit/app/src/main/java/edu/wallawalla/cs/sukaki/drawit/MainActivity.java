@@ -1,14 +1,20 @@
 package edu.wallawalla.cs.sukaki.drawit;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,7 +22,12 @@ public class MainActivity extends AppCompatActivity {
     private Spinner mOptionsTab;
     private Spinner mColorTab;
     private SeekBar mSizeBar;
-    private int penSize;
+    private EditText mNameEditText;
+    private TextView mNameText;
+    private Drawit mCanvas;
+    private String mMessage;
+    private String mName;
+    private final String KEY_NAME = "Name";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         mOptionsTab = findViewById(R.id.optionsTab);
         mColorTab = findViewById(R.id.colorTab);
         mSizeBar = findViewById(R.id.seekBar);
+        mNameEditText = findViewById(R.id.nameEditText);
+        mNameText = findViewById(R.id.nameText);
+        mCanvas = findViewById(R.id.canvas);
 
         ArrayAdapter<CharSequence> adapterOptions = ArrayAdapter.createFromResource(this,
                 R.array.options_array, android.R.layout.simple_spinner_item);
@@ -36,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = (String)parent.getItemAtPosition(position);
-                Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
-//                mNumPizzasTextView.setText("");
+
             }
 
             @Override
@@ -54,8 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = (String)parent.getItemAtPosition(position);
-                Toast.makeText(MainActivity.this, item, Toast.LENGTH_SHORT).show();
-//                mNumPizzasTextView.setText("");
+                mCanvas.setColor(item);
             }
 
             @Override
@@ -66,8 +78,7 @@ public class MainActivity extends AppCompatActivity {
         mSizeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // progress ranges from 0 to max
-                penSize = progress;
+                mCanvas.setBrushSize(progress);
             }
 
             @Override
@@ -78,5 +89,49 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+
+        mNameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mNameText.setText(s.toString());
+                mName = s.toString();
+            }
+        });
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_NAME, mName);
+    }
+
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mName = savedInstanceState.getString(KEY_NAME);
+        mNameText.setText(mName);
+    }
+
+    public void onFilesClick(View view) {
+        Intent intent = new Intent(this, Files.class);
+        startActivityForResult(intent, 0);
+        intent.putExtra(Files.EXTRA_MESSAGE, mMessage);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 0) {
+            mMessage = data.getStringExtra(Files.EXTRA_MESSAGE);
+            Toast.makeText(this, mMessage, Toast.LENGTH_SHORT).show();
+        }
     }
 }

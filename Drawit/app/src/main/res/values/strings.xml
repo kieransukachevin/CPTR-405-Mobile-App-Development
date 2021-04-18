@@ -2,6 +2,8 @@
     <string name="app_name">Drawit</string>
     <string name="welcome_to_drawit">Welcome to Drawit!</string>
     <string name="size">Size:</string>
+    <string name="add">add</string>
+    <string name="save">Save</string>
     <string-array name="options_array">
         <item>Pen</item>
         <item>Brush</item>

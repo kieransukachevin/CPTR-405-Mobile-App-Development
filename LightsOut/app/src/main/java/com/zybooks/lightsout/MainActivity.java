@@ -1,6 +1,9 @@
 package com.zybooks.lightsout;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -13,11 +16,13 @@ import androidx.core.content.ContextCompat;
 public class MainActivity extends AppCompatActivity {
 
     private final String GAME_STATE = "gameState";
+    private final int REQUEST_CODE_COLOR = 0;
     private LightsOutGame mGame;
     private Button[][] mButtons;
     private int mOnColor;
     private int mOffColor;
     private int mCheat;
+    private int mOnColorId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        mOnColorId = R.color.yellow;
         mCheat = 0;
         mGame = new LightsOutGame();
         if (savedInstanceState == null) {
@@ -52,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
     private void startGame() {
         mGame.newGame();
         setButtonColors();
+        Toast.makeText(this, R.string.congrats, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onHelpClick(View view) {
+        Intent intent = new Intent(this, HelpActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -79,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setButtonColors();
+        // Check if mCheat is 5. If so, turn the lights off.
         if (mCheat == 5) {
             mGame.allLightsOff();
         }
@@ -100,6 +113,24 @@ public class MainActivity extends AppCompatActivity {
                     mButtons[row][col].setBackgroundColor(mOffColor);
                 }
             }
+        }
+    }
+
+    public void onChangeColorClick(View view) {
+        Intent intent = new Intent(this, ColorActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_COLOR);
+        intent.putExtra(ColorActivity.EXTRA_COLOR, mOnColorId);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_COLOR) {
+            int colorId = data.getIntExtra(ColorActivity.EXTRA_COLOR, R.color.yellow);
+            mOnColor = ContextCompat.getColor(this, colorId);
+            mOnColorId = data.getIntExtra(ColorActivity.EXTRA_COLOR, R.color.yellow);
+            mOnColor = ContextCompat.getColor(this, mOnColorId);
+            setButtonColors();
         }
     }
 

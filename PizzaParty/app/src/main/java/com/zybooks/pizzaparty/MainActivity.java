@@ -84,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt(KEY_TOTAL_PIZZAS, mTotalPizzas);
     }
 
+    // Restoring the pizzas total
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mTotalPizzas = savedInstanceState.getInt(KEY_TOTAL_PIZZAS);
+        displayTotal();
+    }
+
     public void calculateClick(View view) {
 
         // Get how many are attending the party
@@ -96,26 +104,27 @@ public class MainActivity extends AppCompatActivity {
             numAttend = 0;
         }
 
-//        mTotalPizzas = calc.getTotalPizzas();
-//        displayTotal();
+        int checkedId = mHowHungrySpinner.getSelectedItemPosition();
+        PizzaCalculator.HungerLevel hungerLevel = PizzaCalculator.HungerLevel.RAVENOUS;
+        if (checkedId == 1) {
+            hungerLevel = PizzaCalculator.HungerLevel.MEDIUM;
+        }
+        else if (checkedId == 2) {
+            hungerLevel = PizzaCalculator.HungerLevel.RAVENOUS;
+        }
+        else {
+            hungerLevel = PizzaCalculator.HungerLevel.LIGHT;
+        }
 
-        // Get hunger level selection
-//        int checkedId = mHowHungrySpinner.get();
-//        PizzaCalculator.HungerLevel hungerLevel = PizzaCalculator.HungerLevel.RAVENOUS;
-//        if (checkedId == R.id.lightRadioButton) {
-//            hungerLevel = PizzaCalculator.HungerLevel.LIGHT;
-//        }
-//        else if (checkedId == R.id.mediumRadioButton) {
-//            hungerLevel = PizzaCalculator.HungerLevel.MEDIUM;
-//        }
+        // Show the number of pizzas needed
+        PizzaCalculator calc = new PizzaCalculator(numAttend, hungerLevel);
+        mTotalPizzas = calc.getTotalPizzas();
+        displayTotal();
+    }
 
-//        // Get the number of pizzas needed
-//        PizzaCalculator calc = new PizzaCalculator(numAttend, hungerLevel);
-//        int totalPizzas = calc.getTotalPizzas();
-//
-//        // Place totalPizzas into the string resource and display
-//        String totalText = getString(R.string.total_pizzas, totalPizzas);
-//        mNumPizzasTextView.setText(totalText);
+    private void displayTotal() {
+        String totalText = getString(R.string.total_pizzas, mTotalPizzas);
+        mNumPizzasTextView.setText(totalText);
     }
 
 }
