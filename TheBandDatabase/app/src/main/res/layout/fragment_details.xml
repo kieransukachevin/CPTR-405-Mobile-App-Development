@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zybooks.thebanddatabase.DetailsFragment">
+
+    <TextView
+        android:id="@+id/bandName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/bandName"
+        android:text="band name"/>
+
+    <TextView
+        android:id="@+id/bandDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/bandDescription"
+        android:text="description"/>
+
+</LinearLayout>
