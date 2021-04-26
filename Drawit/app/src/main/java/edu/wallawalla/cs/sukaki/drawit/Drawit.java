@@ -6,18 +6,20 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
+// Code heavily inspired from tutorial found here (https://medium.com/@valokafor/android-drawing-app-tutorial-pt-1-1927f11456ed).
 public class Drawit extends View {
 
     private Path mDrawPath;
     private Paint mCanvasPaint;
     private Paint mDrawPaint;
+    private Canvas mDrawCanvas;
+    private Bitmap mCanvasBitmap;
 
     private int mPaintColor = 0xFF660000;
     private String mPaintName;
-    private Canvas mDrawCanvas;
-    private Bitmap mCanvasBitmap;
     private float mCurrentBrushSize, mLastBrushSize;
 
     public Drawit(Context context) {
@@ -57,5 +59,42 @@ public class Drawit extends View {
 
     public void setColor(String color) {
         mPaintName = color;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        canvas.drawBitmap(mCanvasBitmap, 0 , 0, mCanvasPaint);
+        canvas.drawPath(mDrawPath, mDrawPaint);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        mCanvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        mDrawCanvas = new Canvas(mCanvasBitmap);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float X = event.getX();
+        float Y = event.getY();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mDrawPath.moveTo(X, Y);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                mDrawPath.lineTo(X, Y);
+                break;
+            case MotionEvent.ACTION_UP:
+                mDrawPath.lineTo(X, Y);
+                mDrawCanvas.drawPath(mDrawPath, mDrawPaint);
+                mDrawPath.reset();
+                break;
+            default:
+                return false;
+        }
+        invalidate();
+        return true;
     }
 }
