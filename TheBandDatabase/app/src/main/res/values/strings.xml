@@ -5,11 +5,30 @@
         <item>The Beatles</item>
         <item>Nirvana</item>
         <item>U2</item>
+        <item>Alice in Chains</item>
+        <item>Neutral Milk Hotel</item>
+        <item>The Replacements</item>
+        <item>American Football</item>
+        <item>Snail Mail</item>
+        <item>Pearl Jam</item>
+        <item>Aerosmith</item>
+        <item>Led Zeppelin</item>
+        <item>Boston</item>
     </string-array>
 
     <string-array name="descriptions">
         <item>An English rock band that formed in Liverpool in 1960.</item>
         <item>An American rock band that formed in Washington in 1987.</item>
         <item>An Irish rock band from Dublin that formed in 1976.</item>
+        <item>A band.</item>
+        <item>A band.</item>
+        <item>A band.</item>
+        <item>A band.</item>
+        <item>A band.</item>
+        <item>A band.</item>
+        <item>A band.</item>
+        <item>A band.</item>
+        <item>A band.</item>
+        <item>A band.</item>
     </string-array>
 </resources>
