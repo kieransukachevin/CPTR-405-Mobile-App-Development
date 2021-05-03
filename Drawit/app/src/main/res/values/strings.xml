@@ -7,6 +7,7 @@
     <string name="warning">WARNING</string>
     <string name="warning_message">Would you like to make a new drawing?</string>
     <string name="ok">OK</string>
+    <string name="open">Open</string>
     <string-array name="options_array">
         <item>Pen</item>
         <item>Brush</item>

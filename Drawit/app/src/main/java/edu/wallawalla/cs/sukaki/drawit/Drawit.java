@@ -55,10 +55,22 @@ public class Drawit extends View {
 
     public void setBrushSize(int size) {
         mCurrentBrushSize = size;
+        updateBrush();
     }
 
     public void setColor(String color) {
         mPaintName = color;
+//        mPaintColor =
+        updateBrush();
+    }
+
+    public void updateBrush() {
+        mDrawPaint.setColor(mPaintColor);
+        mDrawPaint.setAntiAlias(true);
+        mDrawPaint.setStrokeWidth(mCurrentBrushSize);
+        mDrawPaint.setStyle(Paint.Style.STROKE);
+        mDrawPaint.setStrokeJoin(Paint.Join.ROUND);
+        mDrawPaint.setStrokeCap(Paint.Cap.ROUND);
     }
 
     @Override

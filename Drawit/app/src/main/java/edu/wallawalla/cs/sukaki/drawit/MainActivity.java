@@ -2,6 +2,8 @@ package edu.wallawalla.cs.sukaki.drawit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -120,17 +122,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onFilesClick(View view) {
-        Intent intent = new Intent(this, Files.class);
-        startActivityForResult(intent, 0);
-        intent.putExtra(Files.EXTRA_MESSAGE, mMessage);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == 0) {
-            mMessage = data.getStringExtra(Files.EXTRA_MESSAGE);
-            Toast.makeText(this, mMessage, Toast.LENGTH_SHORT).show();
-        }
+        Intent intent = new Intent(this, SaveActivity.class);
+        startActivity(intent);
     }
 }
