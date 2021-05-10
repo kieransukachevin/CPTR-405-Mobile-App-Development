@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="blue_800">#0277BD</color>
+    <color name="blue_900">#01579B</color>
+    <color name="blue_400">#42A5F5</color>
+
+    <!-- dark theme -->
+    <color name="paleblue_900">#023</color>
+    <color name="black">#000</color>
+    <color name="gray_200">#EEE</color>
+    <color name="gray_400">#BBB</color>
+    <color name="gray_500">#999</color>
+    <color name="gray_700">#555</color>
+    <color name="colorSubject">#FFF</color>
+
+    <array name="subjectColors">
+        <item>#1A237E</item>
+        <item>#880E4F</item>
+        <item>#006064</item>
+        <item>#F57F17</item>
+        <item>#BF360C</item>
+        <item>#01579B</item>
+        <item>#33691E</item>
+        <item>#4A148C</item>
+        <item>#B71C1C</item>
+    </array>
+</resources>

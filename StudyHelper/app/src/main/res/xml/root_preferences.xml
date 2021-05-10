@@ -1,0 +1,20 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        app:key="theme"
+        app:title="@string/pref_title_theme" />
+
+    <ListPreference
+        app:defaultValue="alphabetic"
+        app:entries="@array/pref_subject_order"
+        app:entryValues="@array/pref_subject_order_values"
+        app:key="subject_order"
+        app:title="@string/pref_title_subject_order"
+        app:useSimpleSummaryProvider="true" />
+
+    <EditTextPreference
+        app:key="default_question"
+        app:title="@string/pref_title_default_question"
+        app:useSimpleSummaryProvider="true" />
+
+</PreferenceScreen>
