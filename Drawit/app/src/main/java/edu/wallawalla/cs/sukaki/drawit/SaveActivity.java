@@ -1,5 +1,7 @@
 package edu.wallawalla.cs.sukaki.drawit;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 public class SaveActivity extends AppCompatActivity implements SaveFragment.OnButtonSelectedListener {
 
     String mState;
+    String mName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +36,14 @@ public class SaveActivity extends AppCompatActivity implements SaveFragment.OnBu
     }
 
     @Override
-    public void onButtonSelected(String buttonId) {
-        // TODO: implement saving
-            mState = buttonId;
-            finish();
+    public void onButtonSelected(String name, String state) {
+        mState = state;
+        mName = name;
+
+        Intent intent = new Intent();
+        intent.putExtra("Name", mName);
+        intent.putExtra("State", mState);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 }

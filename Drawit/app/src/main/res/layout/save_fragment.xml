@@ -7,6 +7,26 @@
     android:id="@+id/save_fragment_view"
     tools:context="edu.wallawalla.cs.sukaki.drawit.SaveFragment">
 
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:labelFor="@id/nameEditText"
+        android:text="Name: "
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/nameEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="5"
+        android:importantForAutofill="no"
+        app:layout_constraintLeft_toRightOf="@id/nameText"
+        app:layout_constraintBaseline_toBaselineOf="@id/nameText"/>
+
     <Button
         android:id="@+id/saveButton"
         android:text="save"
@@ -15,7 +35,7 @@
         android:layout_marginTop="20dp"
         android:tag="save"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/nameEditText" />
 
     <Button
         android:id="@+id/openButton"
@@ -26,5 +46,15 @@
         android:tag="open"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/saveButton" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:text="cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:tag="cancel"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/openButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,11 +1,14 @@
 package edu.wallawalla.cs.sukaki.drawit;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,17 +21,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 public class MainActivity extends AppCompatActivity {
 
     private Spinner mOptionsTab;
     private Spinner mColorTab;
     private SeekBar mSizeBar;
-    private EditText mNameEditText;
-    private TextView mNameText;
     private Drawit mCanvas;
-    private String mMessage;
     private String mName;
-    private final String KEY_NAME = "Name";
+    private String mState;
+    private final int KEY_NAME = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
         mOptionsTab = findViewById(R.id.optionsTab);
         mColorTab = findViewById(R.id.colorTab);
         mSizeBar = findViewById(R.id.seekBar);
-        mNameEditText = findViewById(R.id.nameEditText);
-        mNameText = findViewById(R.id.nameText);
         mCanvas = findViewById(R.id.canvas);
 
         ArrayAdapter<CharSequence> adapterOptions = ArrayAdapter.createFromResource(this,
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         mSizeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mCanvas.setBrushSize(progress);
+                mCanvas.setProgress(progress);
             }
 
             @Override
@@ -90,39 +91,60 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-
-        mNameEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                mNameText.setText(s.toString());
-                mName = s.toString();
-            }
-        });
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(KEY_NAME, mName);
+//        outState.putString(KEY_NAME, mName);
+//        outState.putString(KEY_STATE, mState);
     }
 
     @Override
     public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        mName = savedInstanceState.getString(KEY_NAME);
-        mNameText.setText(mName);
+//        mName = savedInstanceState.getString(KEY_NAME);
+//        mState = savedInstanceState.getString(KEY_STATE);
     }
 
     public void onFilesClick(View view) {
         Intent intent = new Intent(this, SaveActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, KEY_NAME);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case KEY_NAME:
+                if (resultCode == Activity.RESULT_OK) {
+                    mName = data.getStringExtra("Name");
+                    mState = data.getStringExtra("State");
+                }
+        }
+        switch(mState) {
+            case "SAVE":
+                saveFile();
+            case "OPEN":
+                openFile();
+            case "CANCEL":
+                // Do nothing.
+        }
+    }
+
+    public void saveFile() {
+        SharedPreferences  mPrefs = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(mCanvas.getModel(), Model.class);
+        prefsEditor.putString(mName, json);
+        prefsEditor.apply();
+    }
+
+    public void openFile() {
+        SharedPreferences  mPrefs = getPreferences(MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = mPrefs.getString(mName, "");
+        mCanvas.setModel(gson.fromJson(json, Model.class));
     }
 }

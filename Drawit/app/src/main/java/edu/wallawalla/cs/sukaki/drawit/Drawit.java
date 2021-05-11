@@ -12,15 +12,7 @@ import android.view.View;
 // Code heavily inspired from tutorial found here (https://medium.com/@valokafor/android-drawing-app-tutorial-pt-1-1927f11456ed).
 public class Drawit extends View {
 
-    private Path mDrawPath;
-    private Paint mCanvasPaint;
-    private Paint mDrawPaint;
-    private Canvas mDrawCanvas;
-    private Bitmap mCanvasBitmap;
-
-    private int mPaintColor = 0xFF660000;
-    private String mPaintName;
-    private float mCurrentBrushSize, mLastBrushSize;
+    private Model mModel;
 
     public Drawit(Context context) {
         super(context);
@@ -37,54 +29,43 @@ public class Drawit extends View {
         init(context);
     }
 
+    public Model getModel() {
+        return mModel;
+    }
+
+    public void setModel(Model model) {
+        mModel = model;
+    }
+
     private void init(Context context) {
-        mCurrentBrushSize = 5;
+        mModel = new Model();
+        mModel.setCurrentBrushSize(5);
 
-        mDrawPath = new Path();
-        mDrawPaint = new Paint();
+        mModel.setDrawPath(new Path());
+        mModel.setDrawPaint(new Paint());
 
-        mDrawPaint.setColor(mPaintColor);
-        mDrawPaint.setAntiAlias(true);
-        mDrawPaint.setStrokeWidth(mCurrentBrushSize);
-        mDrawPaint.setStyle(Paint.Style.STROKE);
-        mDrawPaint.setStrokeJoin(Paint.Join.ROUND);
-        mDrawPaint.setStrokeCap(Paint.Cap.ROUND);
+        mModel.setColor();
+        mModel.setAntiAlias();
+        mModel.setStrokeWidth();
+        mModel.setStyle(Paint.Style.STROKE);
+        mModel.setStrokeJoin(Paint.Join.ROUND);
+        mModel.setStrokeCap(Paint.Cap.ROUND);
 
-        mCanvasPaint = new Paint(Paint.DITHER_FLAG);
-    }
-
-    public void setBrushSize(int size) {
-        mCurrentBrushSize = size;
-        updateBrush();
-    }
-
-    public void setColor(String color) {
-        mPaintName = color;
-//        mPaintColor =
-        updateBrush();
-    }
-
-    public void updateBrush() {
-        mDrawPaint.setColor(mPaintColor);
-        mDrawPaint.setAntiAlias(true);
-        mDrawPaint.setStrokeWidth(mCurrentBrushSize);
-        mDrawPaint.setStyle(Paint.Style.STROKE);
-        mDrawPaint.setStrokeJoin(Paint.Join.ROUND);
-        mDrawPaint.setStrokeCap(Paint.Cap.ROUND);
+        mModel.setCanvasPaint(new Paint(Paint.DITHER_FLAG));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawBitmap(mCanvasBitmap, 0 , 0, mCanvasPaint);
-        canvas.drawPath(mDrawPath, mDrawPaint);
+        canvas.drawBitmap(mModel.getCanvasBitmap(), 0 , 0, mModel.getCanvasPaint());
+        canvas.drawPath(mModel.getDrawPath(), mModel.getDrawPaint());
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        mCanvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        mDrawCanvas = new Canvas(mCanvasBitmap);
+        mModel.setCanvasBitmap(Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888));
+        mModel.setDrawCanvas(new Canvas(mModel.getCanvasBitmap()));
     }
 
     @Override
@@ -93,20 +74,28 @@ public class Drawit extends View {
         float Y = event.getY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mDrawPath.moveTo(X, Y);
+                mModel.moveDrawPath(X, Y);
                 break;
             case MotionEvent.ACTION_MOVE:
-                mDrawPath.lineTo(X, Y);
+                mModel.drawLine(X, Y);
                 break;
             case MotionEvent.ACTION_UP:
-                mDrawPath.lineTo(X, Y);
-                mDrawCanvas.drawPath(mDrawPath, mDrawPaint);
-                mDrawPath.reset();
+                mModel.drawLine(X, Y);
+                mModel.drawPath();
+                mModel.resetPath();
                 break;
             default:
                 return false;
         }
         invalidate();
         return true;
+    }
+
+    public void setColor(String item) {
+        mModel.setColor();
+    }
+
+    public void setProgress(int progress) {
+        mModel.setBrushSize(progress);
     }
 }
