@@ -12,9 +12,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private Spinner mColorTab;
     private SeekBar mSizeBar;
     private Drawit mCanvas;
+    private Button mUndo;
+    private Button mRedo;
     private String mName;
     private String mState;
     private final int KEY_NAME = 0;
@@ -42,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         mColorTab = findViewById(R.id.colorTab);
         mSizeBar = findViewById(R.id.seekBar);
         mCanvas = findViewById(R.id.canvas);
+        mUndo = findViewById(R.id.undoButton);
+        mRedo = findViewById(R.id.redoButton);
 
         ArrayAdapter<CharSequence> adapterOptions = ArrayAdapter.createFromResource(this,
                 R.array.options_array, android.R.layout.simple_spinner_item);
@@ -52,7 +58,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = (String)parent.getItemAtPosition(position);
-
+                if (item != "Eraser") {
+                    Log.d("ITEM", "Truuuueee");
+                    mCanvas.setColor(item);
+                }
             }
 
             @Override
@@ -107,11 +116,6 @@ public class MainActivity extends AppCompatActivity {
 //        mState = savedInstanceState.getString(KEY_STATE);
     }
 
-    public void onFilesClick(View view) {
-        Intent intent = new Intent(this, SaveActivity.class);
-        startActivityForResult(intent, KEY_NAME);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -125,11 +129,19 @@ public class MainActivity extends AppCompatActivity {
         switch(mState) {
             case "SAVE":
                 saveFile();
+                break;
             case "OPEN":
                 openFile();
+                break;
             case "CANCEL":
+                break;
                 // Do nothing.
         }
+    }
+
+    public void onFilesClick(View view) {
+        Intent intent = new Intent(this, SaveActivity.class);
+        startActivityForResult(intent, KEY_NAME);
     }
 
     public void saveFile() {
@@ -145,6 +157,17 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences  mPrefs = getPreferences(MODE_PRIVATE);
         Gson gson = new Gson();
         String json = mPrefs.getString(mName, "");
-        mCanvas.setModel(gson.fromJson(json, Model.class));
+        if (json != "") {
+//            mCanvas.eraseAll();
+            mCanvas.setModel(gson.fromJson(json, Model.class));
+        }
+    }
+
+    public void onRedoButtonClicked(View view) {
+        mCanvas.onClickRedo();
+    }
+
+    public void onUndoButtonClicked(View view) {
+        mCanvas.onClickUndo();
     }
 }

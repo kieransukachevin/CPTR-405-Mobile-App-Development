@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
 
 public class Model {
     private Path mDrawPath;
@@ -15,10 +16,6 @@ public class Model {
     private int mPaintColor = 0xFF660000;
     private String mPaintName;
     private float mCurrentBrushSize, mLastBrushSize;
-
-    public Path getPath() {
-        return mDrawPath;
-    }
 
     public void setCurrentBrushSize(int size) {
         mCurrentBrushSize = size;
@@ -32,9 +29,7 @@ public class Model {
         mDrawPaint = paint;
     }
 
-    public void setColor() {
-        mDrawPaint.setColor(mPaintColor);
-    }
+    public void setColor() { mDrawPaint.setColor(mPaintColor); }
 
     public void setAntiAlias() {
         mDrawPaint.setAntiAlias(true);
@@ -60,20 +55,35 @@ public class Model {
         mCanvasPaint = paint;
     }
 
+    public Bitmap getCanvasBitmap() {
+        return mCanvasBitmap;
+    }
+
+    public Path getDrawPath() {
+        return mDrawPath;
+    }
+
+    public Paint getDrawPaint() { return mDrawPaint; }
+
+    public Canvas getDrawCanvas() { return mDrawCanvas; }
+
+    public void setCanvasBitmap(Bitmap bitmap) { mCanvasBitmap = bitmap; }
+
+    public void setDrawCanvas(Canvas canvas) { mDrawCanvas = canvas; }
+
+    public void eraseAll() {
+        mDrawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+    }
+
+    public void setErase() {
+        mPaintColor = 0xFFFFFFFF;
+        updateBrush();
+    }
+
     public void setBrushSize(int size) {
         mCurrentBrushSize = size;
         updateBrush();
     }
-
-    public void setColor(String color) {
-        mPaintName = color;
-//        mPaintColor =
-        updateBrush();
-    }
-
-//    public Path getPath() {
-//        return mDrawPath;
-//    }
 
     public void updateBrush() {
         mDrawPaint.setColor(mPaintColor);
@@ -84,47 +94,8 @@ public class Model {
         mDrawPaint.setStrokeCap(Paint.Cap.ROUND);
     }
 
-    public Bitmap getCanvasBitmap() {
-        return mCanvasBitmap;
-    }
-
-    public Paint getCanvasPaint() {
-        return mCanvasPaint;
-    }
-
-    public Path getDrawPath() {
-        return mDrawPath;
-    }
-
-    public Paint getDrawPaint() {
-        return mDrawPaint;
-    }
-
-    public void setCanvasBitmap(Bitmap bitmap) {
-        mCanvasBitmap = bitmap;
-    }
-
-    public void setDrawCanvas(Canvas canvas) {
-        mDrawCanvas = canvas;
-    }
-
-    public void moveDrawPath(float X, float Y) {
-        mDrawPath.moveTo(X, Y);
-    }
-
-    public void drawLine(float X, float Y) {
-        mDrawPath.lineTo(X, Y);
-    }
-
-    public void drawPath() {
-        mDrawCanvas.drawPath(mDrawPath, mDrawPaint);
-    }
-
-    public void resetPath() {
-        mDrawPath.reset();
-    }
-
     public void setNewColor(String item) {
         // TODO: set color.
     }
+
 }

@@ -8,10 +8,12 @@
     <string name="warning_message">Would you like to make a new drawing?</string>
     <string name="ok">OK</string>
     <string name="open">Open</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
     <string-array name="options_array">
         <item>Pen</item>
-        <item>Brush</item>
-        <item>Pencil</item>
+        <item>Eraser</item>
+<!--        <item>Pencil</item>-->
     </string-array>
     <string-array name="color_array">
         <item>Yellow</item>

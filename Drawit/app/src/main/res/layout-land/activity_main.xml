@@ -49,24 +49,23 @@
         app:layout_constraintLeft_toRightOf="@id/size" />
 
 
-    <TextView
-        android:id="@+id/nameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name: "
-        android:labelFor="@id/nameEditText"
-        app:layout_constraintLeft_toRightOf="@id/seekBar"
-        app:layout_constraintTop_toBottomOf="@id/welcomeMessage" />
+    <Button
+        android:id="@+id/undoButton"
+        android:layout_width="100dp"
+        android:layout_height="100px"
+        android:text="@string/undo"
+        android:onClick="onUndoButtonClicked"
+        app:layout_constraintTop_toBottomOf="@id/size"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
-    <EditText
-        android:id="@+id/nameEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:ems="5"
-        android:importantForAutofill="no"
-        app:layout_constraintLeft_toRightOf="@id/nameText"
-        app:layout_constraintBaseline_toBaselineOf="@id/nameText"/>
+    <Button
+        android:id="@+id/redoButton"
+        android:layout_width="100dp"
+        android:layout_height="100px"
+        android:text="@string/redo"
+        android:onClick="onRedoButtonClicked"
+        app:layout_constraintTop_toBottomOf="@id/size"
+        app:layout_constraintLeft_toRightOf="@id/undoButton" />
 
     <edu.wallawalla.cs.sukaki.drawit.Drawit
         android:id="@+id/canvas"

@@ -48,6 +48,23 @@
         app:layout_constraintTop_toBottomOf="@id/welcomeMessage"
         app:layout_constraintLeft_toRightOf="@id/size" />
 
+    <Button
+        android:id="@+id/undoButton"
+        android:layout_width="100dp"
+        android:layout_height="100px"
+        android:text="@string/undo"
+        android:onClick="onUndoButtonClicked"
+        app:layout_constraintTop_toBottomOf="@id/size"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/redoButton"
+        android:layout_width="100dp"
+        android:layout_height="100px"
+        android:text="@string/redo"
+        android:onClick="onRedoButtonClicked"
+        app:layout_constraintTop_toBottomOf="@id/size"
+        app:layout_constraintLeft_toRightOf="@id/undoButton" />
 
     <edu.wallawalla.cs.sukaki.drawit.Drawit
         android:id="@+id/canvas"
