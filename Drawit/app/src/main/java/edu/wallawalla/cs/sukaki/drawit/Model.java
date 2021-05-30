@@ -6,6 +6,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 
+import java.util.ArrayList;
+
 public class Model {
     private Path mDrawPath;
     private Paint mCanvasPaint;
@@ -14,12 +16,44 @@ public class Model {
     private Bitmap mCanvasBitmap;
 
     private int mPaintColor = 0xFF660000;
-    private String mPaintName;
     private float mCurrentBrushSize, mLastBrushSize;
 
-    public void setCurrentBrushSize(int size) {
+    private ArrayList<Path> paths = new ArrayList<Path>();
+    private ArrayList<Path> undonePaths = new ArrayList<Path>();
+
+    public ArrayList<Path> getPaths() { return paths; }
+
+    public void clearUndonePaths() {
+        undonePaths.clear();
+    }
+
+    public void addPath(Path path) {
+        paths.add(path);
+    }
+
+    public Path removePath(int path) {
+        return paths.remove(path);
+    }
+
+    public Path removeUndonePath(int path) {
+        return undonePaths.remove(path);
+    }
+
+    public void addUndonePath(Path path) {
+        undonePaths.add(path);
+    }
+
+    public int getPathsSize() { return paths.size(); }
+
+    public int getUndonePathsSize() { return undonePaths.size(); }
+
+    public void setCurrentBrushSize(float size) {
         mCurrentBrushSize = size;
     }
+
+    public void setLastBrushSize(float size) { mLastBrushSize = size; }
+
+    public float getLastBrushSize() { return mLastBrushSize; }
 
     public void setDrawPath(Path path) {
         mDrawPath = path;

@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -89,7 +90,9 @@ public class MainActivity extends AppCompatActivity {
         mSizeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mCanvas.setProgress(progress);
+//                mCanvas.setProgress(progress);
+                mCanvas.setBrushSize(progress);
+                mCanvas.setLastBrushSize(progress);
             }
 
             @Override

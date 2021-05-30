@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -15,9 +16,6 @@ import java.util.ArrayList;
 public class Drawit extends View {
 
     private Model mModel;
-
-    private ArrayList<Path> paths = new ArrayList<Path>();
-    private ArrayList<Path> undonePaths = new ArrayList<Path>();
 
     private float mX, mY;
     private final int TOUCH_TOLERANCE = 1;
@@ -62,22 +60,20 @@ public class Drawit extends View {
         mModel.setCanvasPaint(new Paint(Paint.DITHER_FLAG));
     }
 
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-//        canvas.drawBitmap(mModel.getCanvasBitmap(), 0 , 0, mModel.getCanvasPaint());
-        for (Path p : paths) {
-            canvas.drawPath(p, mModel.getDrawPaint());
-        }
-        canvas.drawPath(mModel.getDrawPath(), mModel.getDrawPaint());
-    }
-
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
         mModel.setCanvasBitmap(Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888));
         mModel.setDrawCanvas(new Canvas(mModel.getCanvasBitmap()));
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        for (Path p : mModel.getPaths()) {
+            canvas.drawPath(p, mModel.getDrawPaint());
+        }
+        canvas.drawPath(mModel.getDrawPath(), mModel.getDrawPaint());
     }
 
     @Override
@@ -105,7 +101,7 @@ public class Drawit extends View {
     }
 
     private void touch_start(float x, float y) {
-        undonePaths.clear();
+        mModel.clearUndonePaths();
         mModel.getDrawPath().reset();
         mModel.getDrawPath().moveTo(x, y);
         mX = x;
@@ -125,7 +121,7 @@ public class Drawit extends View {
     private void touch_up() {
         mModel.getDrawPath().lineTo(mX, mY);
         mModel.getDrawCanvas().drawPath(mModel.getDrawPath(), mModel.getDrawPaint());
-        paths.add(mModel.getDrawPath());
+        mModel.addPath(mModel.getDrawPath());
         mModel.setDrawPath(new Path());
     }
 
@@ -149,16 +145,16 @@ public class Drawit extends View {
     }
 
     public void onClickUndo () {
-        if (paths.size()>0) {
-            undonePaths.add(paths.remove(paths.size()-1));
+        if (mModel.getPathsSize()>0) {
+            mModel.addUndonePath(mModel.removePath(mModel.getPathsSize()-1));
             invalidate();
         }
 
     }
 
     public void onClickRedo (){
-        if (undonePaths.size()>0) {
-            paths.add(undonePaths.remove(undonePaths.size()-1));
+        if (mModel.getUndonePathsSize()>0) {
+            mModel.addPath(mModel.removeUndonePath(mModel.getUndonePathsSize()-1));
             invalidate();
         }
 
@@ -166,7 +162,7 @@ public class Drawit extends View {
 
     public void setColor(String item) {
         mModel.setCanvasPaint(new Paint(Paint.DITHER_FLAG));
-        if (item != "Eraser") {
+        if (item == "Eraser") {
             mModel.setErase();
         } else {
             mModel.setColor();
@@ -175,5 +171,16 @@ public class Drawit extends View {
 
     public void setProgress(int progress) {
         mModel.setBrushSize(progress);
+    }
+
+    public void setBrushSize(float newSize) {
+        float pixelAmount = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                newSize, getResources().getDisplayMetrics());
+        mModel.setCurrentBrushSize(pixelAmount);
+        mModel.setStrokeWidth();
+    }
+
+    public void setLastBrushSize(float lastSize){
+        mModel.setLastBrushSize(lastSize);
     }
 }
