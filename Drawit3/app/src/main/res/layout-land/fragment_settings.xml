@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_width="128dp"
+            android:layout_height="match_parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" >
 
@@ -26,39 +26,35 @@
                 android:layout_height="64dp"
                 android:text="@string/size"
                 android:background="@drawable/undo_button"
-                android:layout_alignLeft="@id/backButton"
-                android:layout_marginLeft="87dp"
-                android:layout_alignBottom="@id/redoButton" />
+                android:layout_alignTop="@id/backButton"
+                android:layout_marginTop="87dp" />
 
             <ImageButton
                 android:id="@+id/redoButton"
                 android:tag="redoButton"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:text="color"
                 android:background="@drawable/redo_button"
-                android:layout_marginLeft="87dp"
-                android:layout_alignLeft="@id/undoButton" />
+                android:layout_marginTop="87dp"
+                android:layout_alignTop="@id/undoButton" />
 
             <ImageButton
                 android:id="@+id/saveButton"
                 android:tag="saveButton"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:text="color"
                 android:background="@drawable/save_button"
-                android:layout_marginLeft="87dp"
-                android:layout_alignLeft="@id/redoButton"
-                android:layout_alignBottom="@id/redoButton"/>
+                android:layout_marginTop="87dp"
+                android:layout_alignTop="@id/redoButton" />
 
             <ImageButton
                 android:id="@+id/loadButton2"
                 android:tag="loadButton2"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:text="color"
                 android:background="@drawable/load_button"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignLeft="@id/saveButton"
+                android:layout_marginLeft="50dp"/>
         </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
