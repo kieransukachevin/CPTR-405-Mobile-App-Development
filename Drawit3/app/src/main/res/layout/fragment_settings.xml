@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <ImageButton
+                android:id="@+id/sizeButton"
+                android:tag="sizeButton"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:text="@string/size"
+                android:background="@drawable/orange"
+                android:layout_alignParentLeft="true"
+                android:layout_alignBottom="@id/colorButton" />
+
+            <ImageButton
+                android:id="@+id/colorButton"
+                android:tag="colorButton"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:text="color"
+                android:background="@drawable/color_button"
+                android:layout_marginLeft="112dp"
+                android:layout_alignLeft="@+id/sizeButton" />
+
+            <ImageButton
+                android:id="@+id/penButton"
+                android:tag="penButton"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:text="color"
+                android:background="@drawable/pen_button"
+                android:layout_marginLeft="112dp"
+                android:layout_alignLeft="@id/colorButton"
+                android:layout_alignBottom="@id/colorButton"/>
+
+            <ImageButton
+                android:id="@+id/settingsButton"
+                android:tag="settingsButton"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:text="color"
+                android:background="@drawable/settings_button"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
