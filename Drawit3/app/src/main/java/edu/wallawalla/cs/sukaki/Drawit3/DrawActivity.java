@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -18,6 +19,10 @@ public class DrawActivity extends AppCompatActivity implements MenuFragment.OnBu
     private String mButtonId;
     private Drawit mCanvas;
     private int mProgress = 0;
+    private final String KEY_PATHS = "paths";
+    private final String KEY_UNDONE_PATHS = "undonePaths";
+    private final String KEY_PAINTS = "paints";
+    private final String KEY_UNDONE_PAINTS = "undonePaints";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +31,28 @@ public class DrawActivity extends AppCompatActivity implements MenuFragment.OnBu
 
         mCanvas = findViewById(R.id.canvas);
 
+        if (savedInstanceState != null) {
+            mCanvas.setPaths(savedInstanceState.getParcelableArrayList(KEY_PATHS));
+            mCanvas.setUndonePaths(savedInstanceState.getParcelableArrayList(KEY_UNDONE_PATHS));
+            mCanvas.setPaints(savedInstanceState.getParcelableArrayList(KEY_PAINTS));
+            mCanvas.setUndonePaints(savedInstanceState.getParcelableArrayList(KEY_UNDONE_PAINTS));
+        }
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         MenuFragment fragment = new MenuFragment();
         fragmentTransaction.add(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(KEY_PATHS, mCanvas.getPaths());
+        outState.putParcelableArrayList(KEY_UNDONE_PATHS, mCanvas.getUndonePaths());
+        outState.putParcelableArrayList(KEY_PAINTS, mCanvas.getPaints());
+        outState.putParcelableArrayList(KEY_UNDONE_PAINTS, mCanvas.getUndonePaints());
     }
 
     @Override

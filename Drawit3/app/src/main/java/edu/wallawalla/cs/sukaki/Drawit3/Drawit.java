@@ -195,4 +195,36 @@ public class Drawit extends View {
 
         return paint;
     }
+
+    public void setPaths(ArrayList newPaths) {
+        paths = newPaths;
+    }
+
+    public void setUndonePaths(ArrayList newPaths) {
+        undonePaths = newPaths;
+    }
+
+    public ArrayList getPaths() {
+        return paths;
+    }
+
+    public ArrayList getUndonePaths() {
+        return undonePaths;
+    }
+
+    public void setPaints(ArrayList newPaints) {
+        paints = newPaints;
+    }
+
+    public void setUndonePaints(ArrayList newPaints) {
+        undonePaints = newPaints;
+    }
+
+    public ArrayList getPaints() {
+        return paints;
+    }
+
+    public ArrayList getUndonePaints() {
+        return undonePaints;
+    }
 }
