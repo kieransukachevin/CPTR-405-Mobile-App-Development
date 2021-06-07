@@ -3,12 +3,13 @@
     <item>
         <shape>
             <size
-                android:height="50dp"
-                android:width="50dp" />
+                android:height="10dp"
+                android:width="10dp" />
 
             <solid android:color="@android:color/transparent" />
         </shape>
     </item>
-    <item android:drawable="@drawable/seekbar_thumb"/>
-
+    <item android:drawable="@drawable/seekbar_thumb"
+        android:height="32dp"
+        android:width="32dp"/>
 </layer-list>

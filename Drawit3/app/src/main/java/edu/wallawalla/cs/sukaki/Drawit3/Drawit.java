@@ -19,7 +19,7 @@ public class Drawit extends View {
     private Path mDrawPath;
     private Paint mCanvasPaint;
     private Paint mDrawPaint;
-    private int mPaintColor = 0xFF660000;
+    private int mPaintColor = 0xFF0000CC;
     private Canvas mDrawCanvas;
     private Bitmap mCanvasBitmap;
     private float mCurrentBrushSize;
@@ -27,6 +27,8 @@ public class Drawit extends View {
 
     private ArrayList<Path> paths = new ArrayList<Path>();
     private ArrayList<Path> undonePaths = new ArrayList<Path>();
+    private ArrayList<Paint> paints = new ArrayList<Paint>();
+    private ArrayList<Paint> undonePaints = new ArrayList<Paint>();
 
     float mX, mY;
 
@@ -54,8 +56,8 @@ public class Drawit extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        for (Path p : paths) {
-            canvas.drawPath(p, mDrawPaint);
+        for (int i = 0; i < paths.size(); i++) {
+            canvas.drawPath(paths.get(i), paints.get(i));
         }
         canvas.drawPath(mDrawPath, mDrawPaint);
     }
@@ -100,6 +102,7 @@ public class Drawit extends View {
 
     private void touch_start(float x, float y) {
         undonePaths.clear();
+        undonePaints.clear();
         mDrawPath.reset();
         mDrawPath.moveTo(x, y);
         mX = x;
@@ -120,12 +123,15 @@ public class Drawit extends View {
         mDrawPath.lineTo(mX, mY);
         mDrawCanvas.drawPath(mDrawPath, mDrawPaint);
         paths.add(mDrawPath);
+        paints.add(mDrawPaint);
         mDrawPath = new Path();
+        mDrawPaint = setPaint();
     }
 
     public void onClickUndo () {
         if (paths.size() > 0) {
             undonePaths.add(paths.remove(paths.size()-1));
+            undonePaints.add(paints.remove(paints.size()-1));
             invalidate();
         }
     }
@@ -133,6 +139,7 @@ public class Drawit extends View {
     public void onClickRedo () {
         if (undonePaths.size() > 0) {
             paths.add(undonePaths.remove(undonePaths.size()-1));
+            paints.add(undonePaints.remove(undonePaints.size()-1));
             invalidate();
         }
     }
@@ -143,17 +150,39 @@ public class Drawit extends View {
     }
 
     public void setBrushSize(float newSize) {
-        float pixelAmount = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                newSize, getResources().getDisplayMetrics());
+        float pixelAmount = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newSize, getResources().getDisplayMetrics());
         mCurrentBrushSize = pixelAmount;
-        mCanvasPaint.setStrokeWidth(newSize);
+//        mCanvasPaint.setStrokeWidth(newSize);
+        mDrawPaint = setPaint();
     }
 
     public void setLastBrushSize(float lastSize){
-        mLastBrushSize=lastSize;
+        mLastBrushSize = lastSize;
+    }
+
+    public void setEraser() {
+        mPaintColor = 0xFFFFFFFF;
+        mDrawPaint = setPaint();
+    }
+
+    public void setPencil() {
+        mPaintColor = 0xFF0000CC;
+        mDrawPaint = setPaint();
     }
 
     public float getLastBrushSize(){
         return mLastBrushSize;
+    }
+
+    public Paint setPaint() {
+        Paint paint = new Paint();
+        paint.setColor(mPaintColor);
+        paint.setAntiAlias(true);
+        paint.setStrokeWidth(mCurrentBrushSize);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+
+        return paint;
     }
 }

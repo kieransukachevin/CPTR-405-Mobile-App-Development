@@ -11,7 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-public class DrawActivity extends AppCompatActivity implements MenuFragment.OnButtonSelectedListener, SettingsFragment.OnButtonSelectedListener {
+public class DrawActivity extends AppCompatActivity implements MenuFragment.OnButtonSelectedListener, SettingsFragment.OnButtonSelectedListener,
+    BrushSizeFragment.OnSeekBarChangedListener {
 
     private String mButtonId;
     private Drawit mCanvas;
@@ -33,7 +34,6 @@ public class DrawActivity extends AppCompatActivity implements MenuFragment.OnBu
 
     @Override
     public void onButtonSelected(String buttonId) {
-
         mButtonId = buttonId;
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -45,6 +45,20 @@ public class DrawActivity extends AppCompatActivity implements MenuFragment.OnBu
                 fragmentTransaction.replace(R.id.fragment_container, settingsFragment, null);
 
                 fragmentTransaction.commit();
+                break;
+            case "penButton":
+                // Replace the old fragment with the BrushTypeFragment.
+                BrushTypeFragment brushTypeFragment = new BrushTypeFragment();
+                fragmentTransaction.setReorderingAllowed(true);
+                fragmentTransaction.replace(R.id.fragment_container, brushTypeFragment, null);
+
+                fragmentTransaction.commit();
+                break;
+            case "pencilButton":
+                mCanvas.setPencil();
+                break;
+            case "eraserButton":
+                mCanvas.setEraser();
                 break;
             case "undoButton":
                 mCanvas.onClickUndo();
@@ -70,6 +84,12 @@ public class DrawActivity extends AppCompatActivity implements MenuFragment.OnBu
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onSeekBarChanged(int progress) {
+        mCanvas.setBrushSize(progress);
+        mCanvas.setLastBrushSize(progress);
     }
 
     public void resetMenu() {
