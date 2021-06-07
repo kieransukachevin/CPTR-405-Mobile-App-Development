@@ -147,6 +147,8 @@ public class Drawit extends View {
 
     public void eraseAll() {
         mDrawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+        paths.clear();
+        paints.clear();
         invalidate();
     }
 

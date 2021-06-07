@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Drawit 2</string>
     <string name="size">size</string>
+    <string name="warning">Warning</string>
+    <string name="warning_message">Are you sure you would like to erase everything?</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
 </resources>

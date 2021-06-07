@@ -48,11 +48,11 @@
                 android:layout_alignTop="@id/redoButton" />
 
             <ImageButton
-                android:id="@+id/loadButton2"
-                android:tag="loadButton2"
+                android:id="@+id/eraseAllButton"
+                android:tag="eraseAllButton"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:background="@drawable/load_button"
+                android:background="@drawable/erase_all_button"
                 android:layout_alignLeft="@id/saveButton"
                 android:layout_marginLeft="50dp"/>
         </RelativeLayout>

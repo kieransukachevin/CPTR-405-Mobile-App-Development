@@ -1,7 +1,12 @@
 package edu.wallawalla.cs.sukaki.Drawit3;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -12,11 +17,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-public class DrawActivity extends AppCompatActivity implements MenuFragment.OnButtonSelectedListener, MenuFragment.OnColorSelectedListener,
-        SettingsFragment.OnButtonSelectedListener,
-    BrushSizeFragment.OnSeekBarChangedListener {
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+public class DrawActivity extends AppCompatActivity implements MenuFragment.OnButtonSelectedListener,
+        MenuFragment.OnColorSelectedListener, SettingsFragment.OnButtonSelectedListener,
+    BrushSizeFragment.OnSeekBarChangedListener, WarningDialogFragment.OnDialogItemSelectedListener,
+    SaveFragment.OnNameTextChangedListener {
 
     private String mButtonId;
+    private String mName;
     private Drawit mCanvas;
     private int mProgress = 0;
     private final String KEY_PATHS = "paths";
@@ -90,17 +102,28 @@ public class DrawActivity extends AppCompatActivity implements MenuFragment.OnBu
                 mCanvas.onClickRedo();
                 break;
             case "saveButton":
+                SaveFragment saveFragment = new SaveFragment();
+                fragmentTransaction.setReorderingAllowed(true);
+                fragmentTransaction.replace(R.id.fragment_container, saveFragment, null);
+
+                fragmentTransaction.commit();
                 break;
-            case "loadButton2":
+            case "saveButton2":
+                saveImage();
+                resetMenu();
+                break;
+            case "eraseAllButton":
+                WarningDialogFragment dialog = new WarningDialogFragment();
+                dialog.show(fragmentManager, "warningDialog");
                 break;
             case "sizeButton":
                 // Replace the old fragment with the BrushSizeFragment.
                 BrushSizeFragment brushFragment = new BrushSizeFragment();
 
                 // Set the progress of the Seek Bar.
-                Bundle args = new Bundle();
-                args.putInt("progress", mProgress);
-                brushFragment.setArguments(args);
+                Bundle args2 = new Bundle();
+                args2.putInt("progress", mProgress);
+                brushFragment.setArguments(args2);
 
                 fragmentTransaction.setReorderingAllowed(true);
                 fragmentTransaction.replace(R.id.fragment_container, brushFragment, null);
@@ -113,6 +136,52 @@ public class DrawActivity extends AppCompatActivity implements MenuFragment.OnBu
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onNameTextChanged(CharSequence name) {
+        mName = name.toString();
+    }
+
+    @Override
+    public void onDialogItemSelected(Boolean which) {
+        if (which) {
+            mCanvas.eraseAll();
+        }
+    }
+
+    private void saveImage() {
+        if (isExternalStorageWritable()) {
+            mCanvas.setDrawingCacheEnabled(true);
+            mCanvas.invalidate();
+            File file = new File(getExternalFilesDir(null), mName);
+            Log.d("TAG", "File path = " + file.getAbsolutePath());
+            FileOutputStream outputStream = null;
+
+            try {
+                outputStream = new FileOutputStream(file);
+            } catch (Exception e) {
+                Log.e("LOG_CAT", e.getCause() + e.getMessage());
+            }
+
+            if (mCanvas.getDrawingCache() == null) {
+                Log.e("LOG_CAT","Unable to get drawing cache ");
+            }
+
+            mCanvas.getDrawingCache().compress(Bitmap.CompressFormat.JPEG, 85, outputStream);
+
+            try {
+                outputStream.flush();
+                outputStream.close();
+            } catch (IOException e) {
+                Log.e("LOG_CAT", e.getCause() + e.getMessage());
+            }
+
+        }
+    }
+
+    private boolean isExternalStorageWritable() {
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
     @Override

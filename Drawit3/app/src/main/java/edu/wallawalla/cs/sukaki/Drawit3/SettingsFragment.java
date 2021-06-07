@@ -32,7 +32,7 @@ public class SettingsFragment extends Fragment {
         mRedoButton = view.findViewById(R.id.redoButton);
         mUndoButton = view.findViewById(R.id.undoButton);
         mSaveButton = view.findViewById(R.id.saveButton);
-        mLoadButton = view.findViewById(R.id.loadButton2);
+        mLoadButton = view.findViewById(R.id.eraseAllButton);
         mBackButton = view.findViewById(R.id.backButton);
 
         mRedoButton.setOnClickListener(buttonClickListener);
