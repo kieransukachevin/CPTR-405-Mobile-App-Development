@@ -34,6 +34,10 @@ public class BrushSizeFragment extends Fragment {
         mSizeChanger = view.findViewById(R.id.seekbar_brush_size);
         mBackButton.setOnClickListener(buttonClickListener);
 
+        Bundle args = getArguments();
+        int progress = args.getInt("progress");
+
+        mSizeChanger.setProgress(progress);
         mSizeChanger.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

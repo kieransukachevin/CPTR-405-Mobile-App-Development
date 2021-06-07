@@ -20,6 +20,7 @@ public class Drawit extends View {
     private Paint mCanvasPaint;
     private Paint mDrawPaint;
     private int mPaintColor = 0xFF0000CC;
+    private int mLastPaintColor = 0xFF0000CC;
     private Canvas mDrawCanvas;
     private Bitmap mCanvasBitmap;
     private float mCurrentBrushSize;
@@ -152,7 +153,6 @@ public class Drawit extends View {
     public void setBrushSize(float newSize) {
         float pixelAmount = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newSize, getResources().getDisplayMetrics());
         mCurrentBrushSize = pixelAmount;
-//        mCanvasPaint.setStrokeWidth(newSize);
         mDrawPaint = setPaint();
     }
 
@@ -160,13 +160,23 @@ public class Drawit extends View {
         mLastBrushSize = lastSize;
     }
 
+    public void setColor(int color) {
+        mPaintColor = color;
+        mDrawPaint = setPaint();
+    }
+
     public void setEraser() {
-        mPaintColor = 0xFFFFFFFF;
+        if (mPaintColor != 0xFFFFFFFF) {
+            mLastPaintColor = mPaintColor;
+            mPaintColor = 0xFFFFFFFF;
+        }
         mDrawPaint = setPaint();
     }
 
     public void setPencil() {
-        mPaintColor = 0xFF0000CC;
+        if (mPaintColor == 0xFFFFFFFF) {
+            mPaintColor = mLastPaintColor;
+        }
         mDrawPaint = setPaint();
     }
 

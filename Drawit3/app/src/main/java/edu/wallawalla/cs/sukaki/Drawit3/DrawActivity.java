@@ -11,11 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-public class DrawActivity extends AppCompatActivity implements MenuFragment.OnButtonSelectedListener, SettingsFragment.OnButtonSelectedListener,
+public class DrawActivity extends AppCompatActivity implements MenuFragment.OnButtonSelectedListener, MenuFragment.OnColorSelectedListener,
+        SettingsFragment.OnButtonSelectedListener,
     BrushSizeFragment.OnSeekBarChangedListener {
 
     private String mButtonId;
     private Drawit mCanvas;
+    private int mProgress = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,12 @@ public class DrawActivity extends AppCompatActivity implements MenuFragment.OnBu
             case "sizeButton":
                 // Replace the old fragment with the BrushSizeFragment.
                 BrushSizeFragment brushFragment = new BrushSizeFragment();
+
+                // Set the progress of the Seek Bar.
+                Bundle args = new Bundle();
+                args.putInt("progress", mProgress);
+                brushFragment.setArguments(args);
+
                 fragmentTransaction.setReorderingAllowed(true);
                 fragmentTransaction.replace(R.id.fragment_container, brushFragment, null);
 
@@ -87,9 +95,15 @@ public class DrawActivity extends AppCompatActivity implements MenuFragment.OnBu
     }
 
     @Override
+    public void onColorSelected(int color) {
+        mCanvas.setColor(color);
+    }
+
+    @Override
     public void onSeekBarChanged(int progress) {
-        mCanvas.setBrushSize(progress);
-        mCanvas.setLastBrushSize(progress);
+        mProgress = progress;
+        mCanvas.setBrushSize(mProgress);
+        mCanvas.setLastBrushSize(mProgress);
     }
 
     public void resetMenu() {
