@@ -3,7 +3,10 @@ package edu.wallawalla.cs.sukaki.Drawit3;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -47,6 +50,11 @@ public class MenuFragment extends Fragment {
         mColorButton.setOnClickListener(buttonClickListener);
         mPenButton.setOnClickListener(buttonClickListener);
         mSettingsButton.setOnClickListener(buttonClickListener);
+
+        registerForContextMenu(mSizeButton);
+        registerForContextMenu(mColorButton);
+        registerForContextMenu(mPenButton);
+        registerForContextMenu(mSettingsButton);
 
         // handling the Pick Color Button to open color
         // picker dialog
@@ -97,6 +105,24 @@ public class MenuFragment extends Fragment {
     }
 
     @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        if (v == mColorButton) {
+            getActivity().getMenuInflater().inflate(R.menu.color_menu, menu);
+        }
+        else if (v == mPenButton) {
+            getActivity().getMenuInflater().inflate(R.menu.brush_type_menu, menu);
+        }
+        else if (v == mSettingsButton) {
+            getActivity().getMenuInflater().inflate(R.menu.settings_menu, menu);
+        }
+        else if (v == mSizeButton) {
+            getActivity().getMenuInflater().inflate(R.menu.brush_size_menu, menu);
+        }
+    }
+
+    @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof OnButtonSelectedListener) {
@@ -111,6 +137,24 @@ public class MenuFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnBandSelectedListener");
         }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.settingsButtonMenu) {
+            mListener.onButtonSelected("settingsButton");
+            return true;
+        }
+        else if (item.getItemId() == R.id.brushTypeMenu) {
+            mListener.onButtonSelected("penButton");
+            return true;
+        }
+        else if (item.getItemId() == R.id.brushSizeMenu) {
+            mListener.onButtonSelected("sizeButton");
+            return true;
+        }
+
+        return super.onContextItemSelected(item);
     }
 
     private final View.OnClickListener buttonClickListener = new View.OnClickListener() {

@@ -13,6 +13,7 @@ import android.graphics.Path;
 
 import java.util.ArrayList;
 
+// Code heavily inspired from tutorial found here (https://medium.com/@valokafor/android-drawing-app-tutorial-pt-1-1927f11456ed).
 public class Drawit extends View {
 
     private int TOUCH_TOLERANCE = 5;

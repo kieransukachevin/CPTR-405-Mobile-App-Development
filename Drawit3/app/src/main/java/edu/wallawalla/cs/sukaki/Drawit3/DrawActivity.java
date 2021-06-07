@@ -1,26 +1,19 @@
 package edu.wallawalla.cs.sukaki.Drawit3;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.Menu;
-import android.widget.ImageButton;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 public class DrawActivity extends AppCompatActivity implements MenuFragment.OnButtonSelectedListener,
         MenuFragment.OnColorSelectedListener, SettingsFragment.OnButtonSelectedListener,
