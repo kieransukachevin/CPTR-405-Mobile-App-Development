@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:tag="menuFragment">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,7 +29,7 @@
                 android:layout_height="64dp"
                 android:text="color"
                 android:background="@drawable/color_button"
-                android:layout_marginLeft="112dp"
+                android:layout_marginLeft="110dp"
                 android:layout_alignLeft="@+id/sizeButton" />
 
             <ImageButton
@@ -38,7 +39,7 @@
                 android:layout_height="64dp"
                 android:text="color"
                 android:background="@drawable/pen_button"
-                android:layout_marginLeft="112dp"
+                android:layout_marginLeft="110dp"
                 android:layout_alignLeft="@id/colorButton"
                 android:layout_alignBottom="@id/colorButton"/>
 

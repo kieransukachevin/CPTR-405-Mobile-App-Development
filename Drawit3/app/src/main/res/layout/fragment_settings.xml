@@ -12,43 +12,52 @@
             app:layout_constraintTop_toTopOf="parent" >
 
             <ImageButton
-                android:id="@+id/sizeButton"
-                android:tag="sizeButton"
+                android:id="@+id/backButton"
+                android:tag="backButton"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@drawable/back_button"
+                android:layout_alignParentLeft="true" />
+
+            <ImageButton
+                android:id="@+id/undoButton"
+                android:tag="undoButton"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:text="@string/size"
-                android:background="@drawable/orange"
-                android:layout_alignParentLeft="true"
-                android:layout_alignBottom="@id/colorButton" />
+                android:background="@drawable/undo_button"
+                android:layout_alignLeft="@id/backButton"
+                android:layout_marginLeft="87dp"
+                android:layout_alignBottom="@id/redoButton" />
 
             <ImageButton
-                android:id="@+id/colorButton"
-                android:tag="colorButton"
+                android:id="@+id/redoButton"
+                android:tag="redoButton"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:text="color"
-                android:background="@drawable/color_button"
-                android:layout_marginLeft="112dp"
-                android:layout_alignLeft="@+id/sizeButton" />
+                android:background="@drawable/redo_button"
+                android:layout_marginLeft="87dp"
+                android:layout_alignLeft="@id/undoButton" />
 
             <ImageButton
-                android:id="@+id/penButton"
-                android:tag="penButton"
+                android:id="@+id/saveButton"
+                android:tag="saveButton"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:text="color"
-                android:background="@drawable/pen_button"
-                android:layout_marginLeft="112dp"
-                android:layout_alignLeft="@id/colorButton"
-                android:layout_alignBottom="@id/colorButton"/>
+                android:background="@drawable/save_button"
+                android:layout_marginLeft="87dp"
+                android:layout_alignLeft="@id/redoButton"
+                android:layout_alignBottom="@id/redoButton"/>
 
             <ImageButton
-                android:id="@+id/settingsButton"
-                android:tag="settingsButton"
+                android:id="@+id/loadButton2"
+                android:tag="loadButton2"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:text="color"
-                android:background="@drawable/settings_button"
+                android:background="@drawable/load_button"
                 android:layout_alignParentRight="true"/>
         </RelativeLayout>
 

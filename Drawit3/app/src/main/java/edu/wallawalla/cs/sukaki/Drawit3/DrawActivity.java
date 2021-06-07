@@ -14,11 +14,14 @@ import androidx.fragment.app.FragmentTransaction;
 public class DrawActivity extends AppCompatActivity implements MenuFragment.OnButtonSelectedListener, SettingsFragment.OnButtonSelectedListener {
 
     private String mButtonId;
+    private Drawit mCanvas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw);
+
+        mCanvas = findViewById(R.id.canvas);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -32,13 +35,52 @@ public class DrawActivity extends AppCompatActivity implements MenuFragment.OnBu
     public void onButtonSelected(String buttonId) {
 
         mButtonId = buttonId;
-        if (mButtonId.equals("settingsButton")) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        switch (mButtonId) {
+            case "settingsButton":
+                // Replace the old fragment with the SettingsFragment.
+                SettingsFragment settingsFragment = new SettingsFragment();
+                fragmentTransaction.setReorderingAllowed(true);
+                fragmentTransaction.replace(R.id.fragment_container, settingsFragment, null);
 
-            SettingsFragment fragment = new SettingsFragment();
-            fragmentTransaction.add(R.id.fragment_container, fragment);
-            fragmentTransaction.commit();
+                fragmentTransaction.commit();
+                break;
+            case "undoButton":
+                mCanvas.onClickUndo();
+                break;
+            case "redoButton":
+                mCanvas.onClickRedo();
+                break;
+            case "saveButton":
+                break;
+            case "loadButton2":
+                break;
+            case "sizeButton":
+                // Replace the old fragment with the BrushSizeFragment.
+                BrushSizeFragment brushFragment = new BrushSizeFragment();
+                fragmentTransaction.setReorderingAllowed(true);
+                fragmentTransaction.replace(R.id.fragment_container, brushFragment, null);
+
+                fragmentTransaction.commit();
+                break;
+            case "backButton":
+                resetMenu();
+                break;
+            default:
+                break;
         }
+    }
+
+    public void resetMenu() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        // Replace the old fragment with the MenuFragment.
+        MenuFragment fragment = new MenuFragment();
+        fragmentTransaction.setReorderingAllowed(true);
+        fragmentTransaction.replace(R.id.fragment_container, fragment, null);
+
+        fragmentTransaction.commit();
     }
 }

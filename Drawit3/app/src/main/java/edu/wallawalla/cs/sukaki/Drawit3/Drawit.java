@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.graphics.Path;
@@ -129,7 +130,7 @@ public class Drawit extends View {
         }
     }
 
-    public void onClickRedo (){
+    public void onClickRedo () {
         if (undonePaths.size() > 0) {
             paths.add(undonePaths.remove(undonePaths.size()-1));
             invalidate();
@@ -139,5 +140,20 @@ public class Drawit extends View {
     public void eraseAll() {
         mDrawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         invalidate();
+    }
+
+    public void setBrushSize(float newSize) {
+        float pixelAmount = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                newSize, getResources().getDisplayMetrics());
+        mCurrentBrushSize = pixelAmount;
+        mCanvasPaint.setStrokeWidth(newSize);
+    }
+
+    public void setLastBrushSize(float lastSize){
+        mLastBrushSize=lastSize;
+    }
+
+    public float getLastBrushSize(){
+        return mLastBrushSize;
     }
 }

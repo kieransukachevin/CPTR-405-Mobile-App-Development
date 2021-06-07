@@ -10,35 +10,22 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-public class SettingsFragment extends Fragment {
+public class BrushSizeFragment extends Fragment {
 
     public interface OnButtonSelectedListener {
         void onButtonSelected(String buttonId);
     }
 
-    private MenuFragment.OnButtonSelectedListener mListener;
-
-    private ImageButton mRedoButton;
-    private ImageButton mUndoButton;
-    private ImageButton mSaveButton;
-    private ImageButton mLoadButton;
     private ImageButton mBackButton;
+
+    private MenuFragment.OnButtonSelectedListener mListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_brush_size, container, false);
 
-        mRedoButton = view.findViewById(R.id.redoButton);
-        mUndoButton = view.findViewById(R.id.undoButton);
-        mSaveButton = view.findViewById(R.id.saveButton);
-        mLoadButton = view.findViewById(R.id.loadButton2);
         mBackButton = view.findViewById(R.id.backButton);
-
-        mRedoButton.setOnClickListener(buttonClickListener);
-        mUndoButton.setOnClickListener(buttonClickListener);
-        mSaveButton.setOnClickListener(buttonClickListener);
-        mLoadButton.setOnClickListener(buttonClickListener);
         mBackButton.setOnClickListener(buttonClickListener);
 
         return view;
