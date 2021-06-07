@@ -7,8 +7,8 @@
     android:tag="menuFragment">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" >
 
@@ -19,8 +19,7 @@
                 android:layout_height="64dp"
                 android:text="@string/size"
                 android:background="@drawable/size_button"
-                android:layout_alignParentLeft="true"
-                android:layout_alignBottom="@id/colorButton" />
+                android:layout_alignParentLeft="true" />
 
             <ImageButton
                 android:id="@+id/colorButton"
@@ -29,8 +28,8 @@
                 android:layout_height="64dp"
                 android:text="color"
                 android:background="@drawable/color_button"
-                android:layout_marginLeft="110dp"
-                android:layout_alignLeft="@+id/sizeButton" />
+                android:layout_marginTop="87dp"
+                android:layout_alignTop="@id/sizeButton" />
 
             <ImageButton
                 android:id="@+id/penButton"
@@ -39,9 +38,8 @@
                 android:layout_height="64dp"
                 android:text="color"
                 android:background="@drawable/pen_button"
-                android:layout_marginLeft="110dp"
-                android:layout_alignLeft="@id/colorButton"
-                android:layout_alignBottom="@id/colorButton"/>
+                android:layout_marginTop="87dp"
+                android:layout_alignTop="@id/colorButton" />
 
             <ImageButton
                 android:id="@+id/settingsButton"
@@ -50,7 +48,7 @@
                 android:layout_height="64dp"
                 android:text="color"
                 android:background="@drawable/settings_button"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentBottom="true"/>
         </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

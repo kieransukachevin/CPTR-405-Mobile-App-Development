@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_width="128dp"
+            android:layout_height="match_parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" >
 
@@ -19,26 +19,25 @@
                 android:background="@drawable/back_button"
                 android:layout_alignParentLeft="true" />
 
-            <ImageView
-                android:id="@+id/brushSizeText"
-                android:layout_width="128dp"
+            <ImageButton
+                android:id="@+id/eraserButton"
+                android:tag="eraserButton"
+                android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/brush_size_text"
-                android:layout_alignLeft="@id/backButton"
-                android:layout_marginLeft="50dp"/>
+                android:text="@string/size"
+                android:background="@drawable/eraser_button"
+                android:layout_alignTop="@id/backButton"
+                android:layout_marginTop="87dp" />
 
-            <SeekBar
-                android:id="@+id/seekbar_brush_size"
-                android:layout_width="256dp"
+            <ImageButton
+                android:id="@+id/pencilButton"
+                android:tag="pencilButton"
+                android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:layout_alignLeft="@id/brushSizeText"
-                android:layout_alignBottom="@id/brushSizeText"
-                android:layout_marginLeft="94dp"
-                android:layout_marginBottom="0dp"
-                android:max="100"
-                android:progress="2"
-                android:progressTint="@color/dark_blue"
-                android:thumb="@drawable/seekbar_thumb_layout" />
+                android:text="color"
+                android:background="@drawable/pen_button"
+                android:layout_alignTop="@id/eraserButton"
+                android:layout_marginTop="87dp" />
         </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
